@@ -6,13 +6,45 @@
         <meta charset="utf-8" />
         <link rel="stylesheet" href="main.css" type="text/css" />
         <title>API</title>
+        <script src="jquery-3.3.1.min.js"></script>
     </head>
     <body>
         <h1>API Testing</h1>
         <p>This will try to fetch data from APIs</p>
-        <button onclick="test()"></button>
+        <button onclick="api2()"></button>
         
         <script src="js/functions.js"></script>
+        <script>
+            //Authirize uri https://{region}.battle.net/oauth/authorize
+            //Token uri https://{region}.battle.net/oauth/token
+            
+            /*wow.profile
+                Access to a users World of Warcraft characters.
+                https://us.battle.net/wow/user/characters*/
+            var extraURL = encodeURI("?client_id=Emissary API&scope=wow.profile&state=1&redirect_uri=https://zebmastah.github.io&respone_type=code");
+            
+            function api(){
+                $.ajax("https://eu.battle.net/oauth/authorize"+extraURL, {
+                    type: "POST",
+                    data: JSON.stringify({ data: "Hello world!" }),
+                    contentType: "application/json",
+                }).done(function (data) {
+                    $("#encoded").html(data.encoded);
+                }).fail(function (xhr, status, error) {
+                    $("#error").html("Could not reach the API: " + error);
+                });
+            }
+            function api2(){
+                $.ajax({ 
+                   type: "POST",
+                   contentType: "application/json",
+                   url: "https://eu.battle.net/oauth/authorize"+extraURL",
+                   success: function(data){        
+                     alert(data);
+                   }
+                });
+            }
+        </script>
     </body>
 </html>
     
